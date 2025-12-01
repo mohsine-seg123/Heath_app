@@ -17,6 +17,31 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'App Title', // Titre de ton app
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        ),
+        backgroundColor: Color.fromARGB(255, 165, 200, 203), // Couleur personnalisée
+        centerTitle: true, // Pour centrer le titre
+        actions: [
+          IconButton(
+            icon: Icon(Icons.notifications), // Exemple d'icône à droite
+            onPressed: () {
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () {
+            },
+          ),
+        ],
+        leading: IconButton(
+          icon: Icon(Icons.menu), // Icône à gauche (menu)
+          onPressed: () {
+          },
+        ),
+      ),
       backgroundColor: Colors.grey[300],
       body: SafeArea(
         child: SingleChildScrollView(
