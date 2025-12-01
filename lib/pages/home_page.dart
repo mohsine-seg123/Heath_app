@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       SizedBox(height: 8),
-                      Text("Nasr-allah", style: TextStyle(fontSize: 24)),
+                      Text("Mohssine", style: TextStyle(fontSize: 24)),
                     ],
                   ),
                   // partie de profil
