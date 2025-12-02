@@ -6,14 +6,14 @@ import 'package:lottie/lottie.dart';
 import 'MedicalForm.dart';
 
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class Home_Page extends StatefulWidget {
+  const Home_Page({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<Home_Page> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<Home_Page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,14 +31,14 @@ class _HomePageState extends State<HomePage> {
                   Column(
                     children: [
                       Text(
-                        "Hello,",
+                        "Hello, Nasr-allah",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
                         ),
                       ),
-                      SizedBox(height: 8),
-                      Text("Mohssine", style: TextStyle(fontSize: 24)),
+                      //SizedBox(height: 8),
+                      //Text("Mohssine", style: TextStyle(fontSize: 24)),
                     ],
                   ),
                   // partie de profil
@@ -46,17 +46,17 @@ class _HomePageState extends State<HomePage> {
                     padding: EdgeInsets.all(12),
                     decoration: BoxDecoration(
                       color: Colors.deepPurple[100],
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(20),
                     ),
                     child: Icon(Icons.person),
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 25),
+            SizedBox(height: 18),
             // card how do you feel?
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 3.0),
+              padding: const EdgeInsets.symmetric(horizontal: 1.0),
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.pink[100],
@@ -119,7 +119,7 @@ class _HomePageState extends State<HomePage> {
             SizedBox(height: 18),
             // search bar
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 5.0),
+              padding: EdgeInsets.symmetric(horizontal:1.0),
               child: Container(
                 padding: EdgeInsets.all(12),
                 decoration: BoxDecoration(
