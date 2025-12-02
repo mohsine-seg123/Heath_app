@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:untitled1/pages/home_page.dart';
+import 'package:untitled1/pages/IntroPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      home: const HomePage(),
+      home: const IntroPage(),
 
     );
   }

@@ -42,6 +42,9 @@ class _HomePageState extends State<HomePage> {
           },
         ),
       ),
+
+
+      
       backgroundColor: Colors.grey[300],
       body: SafeArea(
         child: SingleChildScrollView(
@@ -63,7 +66,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       SizedBox(height: 8),
-                      Text("Nasr-allah", style: TextStyle(fontSize: 24)),
+                      Text("Mohssine", style: TextStyle(fontSize: 24)),
                     ],
                   ),
                   // partie de profil
