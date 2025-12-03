@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> {
     }
       return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.deepPurple[100],
+          backgroundColor: Colors.blue[200],
           title: Text("welcome to medecine  app"),
         ),
         body: container,

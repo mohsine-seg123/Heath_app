@@ -21,7 +21,7 @@ class _MedicalSettingsPageState extends State<MedicalSettingsPage> {
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.white, Colors.white70],
+            colors: [Colors.blue.shade200, Colors.blue.shade500],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),

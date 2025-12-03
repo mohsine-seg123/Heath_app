@@ -20,7 +20,7 @@ class DocteurCard extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: Colors.deepPurple[100],
+          color: Colors.blue[200],
           borderRadius: BorderRadius.circular(12.0),
         ),
 

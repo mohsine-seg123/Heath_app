@@ -11,7 +11,7 @@ class _AboutPageState extends State<AboutPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white60,
+      backgroundColor: Colors.blue[100],
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
