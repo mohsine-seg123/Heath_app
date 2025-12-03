@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:untitled1/pages/Category.dart';
 import 'package:untitled1/pages/Docteur_card.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'MedicalForm.dart';
 
@@ -9,11 +10,32 @@ import 'MedicalForm.dart';
 class Home_Page extends StatefulWidget {
   const Home_Page({super.key});
 
+
+
   @override
   State<Home_Page> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<Home_Page> {
+  String? username;
+  Future <String?> getUsername() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString("username");
+  }
+  Future <String?> getemail()async{
+    final prefs= await SharedPreferences.getInstance();
+    return prefs.getString("email");
+  }
+  void initState() {
+    super.initState();
+    loadUsername();
+  }
+  void loadUsername() async {
+    String? name = await getUsername();
+    setState(() {
+      username = name;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,35 +46,59 @@ class _HomePageState extends State<Home_Page> {
           children: [
             // app bar
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  // Texte utilisateur
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Hello, Nasr-allah",
+                        "Hello ",
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
+                          fontSize: 13,
+                          color: Colors.grey[600],
                         ),
                       ),
-                      //SizedBox(height: 8),
-                      //Text("Mohssine", style: TextStyle(fontSize: 24)),
+                      Text(
+                        username ?? "User",
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
                     ],
                   ),
-                  // partie de profil
+
+                  // Icône profil stylée
                   Container(
-                    padding: EdgeInsets.all(12),
+                    height: 42,
+                    width: 42,
                     decoration: BoxDecoration(
-                      color: Colors.deepPurple[100],
-                      borderRadius: BorderRadius.circular(20),
+                      gradient: const LinearGradient(
+                        colors: [Colors.deepPurple, Colors.purpleAccent],
+                      ),
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.deepPurple.withOpacity(0.3),
+                          blurRadius: 8,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
                     ),
-                    child: Icon(Icons.person),
+                    child: const Icon(
+                      Icons.person,
+                      color: Colors.white,
+                      size: 22,
+                    ),
                   ),
                 ],
               ),
             ),
+
             SizedBox(height: 18),
             // card how do you feel?
             Padding(

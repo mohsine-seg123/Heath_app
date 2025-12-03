@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyHeaderDrawer extends StatefulWidget {
   const MyHeaderDrawer({super.key});
@@ -8,6 +9,28 @@ class MyHeaderDrawer extends StatefulWidget {
 }
 
 class _MyHeaderDrawerState extends State<MyHeaderDrawer> {
+  String? email;
+  String ? username;
+  Future <String?> getUsername() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString("username");
+  }
+  Future <String?> getemail()async{
+    final prefs= await SharedPreferences.getInstance();
+    return prefs.getString("email");
+  }
+  void initState() {
+    super.initState();
+    loadEmail();
+  }
+  void loadEmail() async {
+    String? Email=await getemail();
+    String? name=await getUsername();
+    setState(() {
+      email=Email;
+      username=name;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -35,11 +58,11 @@ class _MyHeaderDrawerState extends State<MyHeaderDrawer> {
             ),
           ),
           Text(
-            "Nasr-allah Zouagui",
+            "${username ?? "User"}",
             style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold, fontSize: 20),
           ),
           Text(
-            "nasrzou566@gmail.com",
+            "${email ?? "user@gmail.com"}",
             style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold, fontSize: 14),
           ),
         ],

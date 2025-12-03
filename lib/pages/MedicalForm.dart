@@ -72,23 +72,27 @@ class _MedicalFormState extends State<MedicalForm> {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
 
-                    // Show the entered data
+                    String result = getMedicalAdvice(symptoms, allergies, medications);
+
                     showDialog(
                       context: context,
                       builder: (_) => AlertDialog(
-                        title: Text("Medical Record Saved"),
-                        content: Text(
-                            "Name: $name\nAge: $age\nAllergies: $allergies\nMedications: $medications\nSymptoms: $symptoms"),
+                        title: Text("Medical Recommendation"),
+                        content: Text(result),
                         actions: [
                           TextButton(
-                              onPressed: () => Navigator.push(context,
-                              MaterialPageRoute(builder: (_)=>HomePage())),
-                              child: Text("OK"))
+                            onPressed: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (_) => HomePage()),
+                            ),
+                            child: Text("Go to Home"),
+                          ),
                         ],
                       ),
                     );
                   }
                 },
+
                 child: Text("Save"),
               ),
             ],
@@ -97,6 +101,70 @@ class _MedicalFormState extends State<MedicalForm> {
       ),
     );
   }
+  String getMedicalAdvice(String symptoms, String allergies, String medications) {
+    String advice = "";
+    String doctor = "";
+
+    // ---- SYMPTÔMES ----
+    if (symptoms.toLowerCase().contains("fever") ||
+        symptoms.toLowerCase().contains("cough") ||
+        symptoms.toLowerCase().contains("flu")) {
+      advice =
+      "You may have a viral infection. Rest well, drink water, and monitor your temperature.";
+      doctor = "General Practitioner (Médecin généraliste)";
+    }
+
+    else if (symptoms.toLowerCase().contains("chest pain") ||
+        symptoms.toLowerCase().contains("heart")) {
+      advice =
+      "Chest pain can be serious. Avoid effort and seek medical help immediately.";
+      doctor = "Cardiologist (Cardiologue)";
+    }
+
+    else if (symptoms.toLowerCase().contains("headache") ||
+        symptoms.toLowerCase().contains("dizziness")) {
+      advice =
+      "This could be caused by stress, dehydration, or migraine. Rest and stay hydrated.";
+      doctor = "Neurologist (Neurologue)";
+    }
+
+    else if (symptoms.toLowerCase().contains("stomach") ||
+        symptoms.toLowerCase().contains("vomiting") ||
+        symptoms.toLowerCase().contains("diarrhea")) {
+      advice =
+      "Avoid spicy food, drink water, and eat light meals.";
+      doctor = "Gastroenterologist (Gastro-entérologue)";
+    }
+
+    else if (symptoms.toLowerCase().contains("skin") ||
+        symptoms.toLowerCase().contains("rash") ||
+        symptoms.toLowerCase().contains("acne")) {
+      advice =
+      "Avoid using new cosmetic products and keep your skin clean.";
+      doctor = "Dermatologist (Dermatologue)";
+    }
+
+    else {
+      advice =
+      "Your symptoms require medical evaluation for proper diagnosis.";
+      doctor = "General Practitioner (Médecin généraliste)";
+    }
+
+    // ---- ALLERGIES ----
+    if (allergies.isNotEmpty) {
+      advice +=
+      "\n\n⚠️ Important: Since you have allergies, always inform your doctor before taking any new medication.";
+    }
+
+    // ---- MEDICATIONS ----
+    if (medications.isNotEmpty) {
+      advice +=
+      "\n\n💊 Continue taking your medications only as prescribed by your doctor.";
+    }
+
+    return "🩺 Medical Advice:\n$advice\n\n👨‍⚕️ Recommended Doctor:\n$doctor";
+  }
+
 }
 
 

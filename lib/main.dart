@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:untitled1/pages/About.dart';
 import 'package:untitled1/pages/Doctors.dart';
+import 'package:untitled1/pages/IntroPage.dart';
+import 'package:untitled1/pages/LoginPage.dart';
 import 'package:untitled1/pages/MyHeaderDrawer.dart';
 import 'package:untitled1/pages/Settings.dart';
 import 'package:untitled1/pages/home_page.dart';
@@ -18,7 +20,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: IntroPage(),
     );
   }
 }
@@ -42,8 +44,6 @@ class _HomePageState extends State<HomePage> {
       container = MedicalSettingsPage();
     } else if (currentPage == DrawerSections.Doctors) {
       container = Doctors();
-    } else if (currentPage == DrawerSections.Logout){
-      //container=Login();
     }
     else if (currentPage == DrawerSections.About){
       container=AboutPage();
@@ -121,8 +121,12 @@ class _HomePageState extends State<HomePage> {
             }else if (id == 4) {
               currentPage = DrawerSections.About;
             }
-            else if (id == 5) {
-              currentPage = DrawerSections.Logout;
+            else if (id == 5) { // Logout
+              Navigator.pop(context); // fermer le drawer
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LoginPage()),
+              );
             }
           });
         },
