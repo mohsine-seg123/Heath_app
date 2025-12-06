@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
     } else if (currentPage == DrawerSections.settings) {
       container = MedicalSettingsPage();
     } else if (currentPage == DrawerSections.Doctors) {
-      container = Doctors();
+      container = DoctorsPage();
     }
     else if (currentPage == DrawerSections.About){
       container=AboutPage();

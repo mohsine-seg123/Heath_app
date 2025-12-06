@@ -12,6 +12,7 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUp> {
+  bool  _obscureText=true;
   final _usernameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -39,6 +40,7 @@ class _SignUpPageState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -95,11 +97,22 @@ class _SignUpPageState extends State<SignUp> {
                 // Password
                 TextFormField(
                   controller: _passwordController,
-                  obscureText: true,
-                  decoration: const InputDecoration(
+                  obscureText: _obscureText,
+                  decoration: InputDecoration(
                     labelText: "Password",
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _obscureText ? Icons.visibility : Icons.visibility_off,
+                      ),
+                        onPressed: () {
+                      setState(() {
+                        _obscureText = !_obscureText; // inverse l'état
+                      });
+                    },
+                    )
                   ),
+
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your password';

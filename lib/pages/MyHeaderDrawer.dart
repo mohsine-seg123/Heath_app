@@ -36,7 +36,7 @@ class _MyHeaderDrawerState extends State<MyHeaderDrawer> {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("assets/images/drawerBack.jpg"),
+          image: AssetImage("assets/images/back2.jpg"),
           fit: BoxFit.cover,
         ),
 
@@ -48,22 +48,20 @@ class _MyHeaderDrawerState extends State<MyHeaderDrawer> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            margin: EdgeInsets.only(bottom: 10),
             height: 70,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                image: AssetImage('assets/images/black.png'),
-              ),
+            child:   const CircleAvatar(
+              radius: 24,
+              backgroundColor: Colors.white,
+              child: Icon(Icons.person, color: Colors.black),
             ),
           ),
           Text(
             "${username ?? "User"}",
-            style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold, fontSize: 20),
+            style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold, fontSize: 30),
           ),
           Text(
             "${email ?? "user@gmail.com"}",
-            style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold, fontSize: 14),
+            style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold, fontSize: 26),
           ),
         ],
       ),

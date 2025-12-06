@@ -3,14 +3,13 @@ import 'package:untitled1/pages/Category.dart';
 import 'package:untitled1/pages/Docteur_card.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:untitled1/pages/Doctors.dart';
 
+import 'DoctorDetailPage.dart';
 import 'MedicalForm.dart';
-
 
 class Home_Page extends StatefulWidget {
   const Home_Page({super.key});
-
-
 
   @override
   State<Home_Page> createState() => _HomePageState();
@@ -19,12 +18,12 @@ class Home_Page extends StatefulWidget {
 class _HomePageState extends State<Home_Page> {
   String? username;
 
-  Future <String?> getUsername() async {
+  Future<String?> getUsername() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString("username");
   }
 
-  Future <String?> getemail() async {
+  Future<String?> getemail() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString("email");
   }
@@ -46,10 +45,10 @@ class _HomePageState extends State<Home_Page> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView( // ✅ SCROLL UNIQUE POUR TOUT
+        child: SingleChildScrollView(
+          // ✅ SCROLL UNIQUE POUR TOUT
           child: Column(
             children: [
-
               // ✅ HEADER CARD
               Container(
                 padding: const EdgeInsets.all(20),
@@ -57,10 +56,7 @@ class _HomePageState extends State<Home_Page> {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   boxShadow: const [
-                    BoxShadow(
-                      blurRadius: 10,
-                      color: Colors.black12,
-                    ),
+                    BoxShadow(blurRadius: 10, color: Colors.black12),
                   ],
                 ),
                 child: Row(
@@ -74,12 +70,16 @@ class _HomePageState extends State<Home_Page> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text("Welcome back",
-                            style: TextStyle(color: Colors.grey)),
+                        const Text(
+                          "Welcome back",
+                          style: TextStyle(color: Colors.grey),
+                        ),
                         Text(
                           username ?? "User",
                           style: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ],
                     ),
@@ -91,9 +91,7 @@ class _HomePageState extends State<Home_Page> {
               Container(
                 margin: const EdgeInsets.only(bottom: 20),
                 padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                ),
+                decoration: BoxDecoration(color: Colors.blue[400]),
                 child: Row(
                   children: [
                     SizedBox(
@@ -109,9 +107,10 @@ class _HomePageState extends State<Home_Page> {
                           const Text(
                             "Medical Card",
                             style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18),
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
                           ),
                           const SizedBox(height: 6),
                           const Text(
@@ -138,15 +137,16 @@ class _HomePageState extends State<Home_Page> {
                                 child: Text(
                                   "Get Started",
                                   style: TextStyle(
-                                      color: Color(0xFF1976D2),
-                                      fontWeight: FontWeight.bold),
+                                    color: Color(0xFF1976D2),
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             ),
-                          )
+                          ),
                         ],
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -176,16 +176,26 @@ class _HomePageState extends State<Home_Page> {
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: const [
-                    Category(iconImage: 'assets/images/tooth1.png',
-                        Categoryname: "Dentist"),
-                    Category(iconImage: 'assets/images/surgeon.png',
-                        Categoryname: "Surgeon"),
-                    Category(iconImage: 'assets/images/capsule.png',
-                        Categoryname: "Pharmacist"),
-                    Category(iconImage: 'assets/images/cardiology.png',
-                        Categoryname: "Cardiology"),
-                    Category(iconImage: 'assets/images/brain.png',
-                        Categoryname: "Neurologie"),
+                    Category(
+                      iconImage: 'assets/images/tooth1.png',
+                      Categoryname: "Dentist",
+                    ),
+                    Category(
+                      iconImage: 'assets/images/surgeon.png',
+                      Categoryname: "Surgeon",
+                    ),
+                    Category(
+                      iconImage: 'assets/images/capsule.png',
+                      Categoryname: "Pharmacist",
+                    ),
+                    Category(
+                      iconImage: 'assets/images/cardiology.png',
+                      Categoryname: "Cardiology",
+                    ),
+                    Category(
+                      iconImage: 'assets/images/brain.png',
+                      Categoryname: "Neurologie",
+                    ),
                   ],
                 ),
               ),
@@ -199,16 +209,18 @@ class _HomePageState extends State<Home_Page> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: const [
                     Text(
-                      "Doctor List",
+                      "Pioneers of medecine",
                       style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     Text(
                       "See all",
                       style: TextStyle(
-                          color: Color(0xFF1976D2),
-                          fontWeight: FontWeight.bold),
+                        color: Color(0xFF1976D2),
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ],
                 ),
@@ -221,28 +233,216 @@ class _HomePageState extends State<Home_Page> {
                 height: 230,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
-                  children: const [
+                  children: [
+
+                    // ===================== DOCTEUR 1 =====================
                     DocteurCard(
                       DocImgPath: "assets/images/DOCRE1.png",
-                      rating: "4.5",
+                      rating: "5",
                       Docname: "Dr.Amal Bourquia",
                       specialite: "Nephrology",
+                      ville: "Fés",
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => DoctorProfilePage(
+                              doctorName: "Dr.Amal Bourquia",
+                              specialty: "Nephrology",
+                              city: "Fés",
+                              rating: "5",
+                              imagePath: "assets/images/DOCRE1.png",
+                              bio:
+                              "Dr. Amal Bourquia is a leading nephrologist in Morocco with a strong passion for kidney health and patient care.",
+                              education: [
+                                "MD, University of Fés, Morocco",
+                                "Residency in Nephrology, Paris, France",
+                                "Fellowship in Kidney Transplant, London, UK",
+                              ],
+                              experience: [
+                                "Head of Nephrology Department, Fés Hospital",
+                                "10+ years of clinical experience",
+                                "Published research in international journals",
+                              ],
+                            ),
+                          ),
+                        );
+                      },
                     ),
+
+                    const SizedBox(width: 10),
+
+                    // ===================== DOCTEUR 2 =====================
                     DocteurCard(
                       DocImgPath: "assets/images/DOCRE2.png",
-                      rating: "4.8",
+                      rating: "5",
                       Docname: "Abdellatif Berbich",
                       specialite: "Internal Medicine",
+                      ville: "Tanger",
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => DoctorProfilePage(
+                              doctorName: "Abdellatif Berbich",
+                              specialty: "Internal Medicine",
+                              city: "Tanger",
+                              rating: "5",
+                              imagePath: "assets/images/DOCRE2.png",
+                              bio:
+                              "Pioneer of internal medicine and nephrology in Morocco.",
+                              education: [
+                                "MD, University of Montpellier",
+                                "Specialization in Nephrology, Paris",
+                              ],
+                              experience: [
+                                "Founder of multiple dialysis centers",
+                                "Over 30 years of medical experience",
+                              ],
+                            ),
+                          ),
+                        );
+                      },
                     ),
+
+                    const SizedBox(width: 10),
+
+                    // ===================== DOCTEUR 3 =====================
                     DocteurCard(
                       DocImgPath: "assets/images/DOCRE3.png",
-                      rating: "4.8",
+                      rating: "5",
                       Docname: "Rochdi Talib",
                       specialite: "Anesthesia",
+                      ville: "Rabat",
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => DoctorProfilePage(
+                              doctorName: "Rochdi Talib",
+                              specialty: "Anesthesia",
+                              city: "Rabat",
+                              rating: "5",
+                              imagePath: "assets/images/DOCRE3.png",
+                              bio:
+                              "Specialist in anesthesia and intensive care.",
+                              education: [
+                                "MD, Faculty of Medicine Rabat",
+                              ],
+                              experience: [
+                                "Head of anesthesia department",
+                                "15 years of experience",
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+
+                    const SizedBox(width: 10),
+
+                    // ===================== DOCTEUR 4 =====================
+                    DocteurCard(
+                      DocImgPath: "assets/images/imf2.jpg",
+                      rating: "5",
+                      Docname: "Latifa Gharbaoui",
+                      specialite: "Radiology / Medical Imaging",
+                      ville: "Houston, USA",
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => DoctorProfilePage(
+                              doctorName: "Latifa Gharbaoui",
+                              specialty: "Radiology / Medical Imaging",
+                              city: "Houston, USA",
+                              rating: "5",
+                              imagePath: "assets/images/imf2.jpg",
+                              bio:
+                              "Expert in medical imaging and radiological diagnosis.",
+                              education: [
+                                "MD, Casablanca",
+                                "Radiology specialization, USA",
+                              ],
+                              experience: [
+                                "Radiologist at major US hospitals",
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+
+                    const SizedBox(width: 10),
+
+                    // ===================== DOCTEUR 5 =====================
+                    DocteurCard(
+                      DocImgPath: "assets/images/imf1.jpg",
+                      rating: "5",
+                      Docname: "Rajae Ghanimi",
+                      specialite: "Public Health / Health Insurance",
+                      ville: "Casablanca",
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => DoctorProfilePage(
+                              doctorName: "Rajae Ghanimi",
+                              specialty: "Public Health / Health Insurance",
+                              city: "Casablanca",
+                              rating: "5",
+                              imagePath: "assets/images/imf1.jpg",
+                              bio:
+                              "Specialist in public health and medical insurance.",
+                              education: [
+                                "MD, Rabat",
+                              ],
+                              experience: [
+                                "Health insurance consultant",
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+
+                    const SizedBox(width: 10),
+
+                    // ===================== DOCTEUR 6 =====================
+                    DocteurCard(
+                      DocImgPath: "assets/images/imf.jpg",
+                      rating: "5",
+                      Docname: "Abderrahim Harouchi",
+                      specialite: "Pediatric Surgery / Public Health",
+                      ville: "Casablanca",
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => DoctorProfilePage(
+                              doctorName: "Abderrahim Harouchi",
+                              specialty: "Pediatric Surgery / Public Health",
+                              city: "Casablanca",
+                              rating: "5",
+                              imagePath: "assets/images/imf.jpg",
+                              bio:
+                              "Former Minister of Health and pediatric surgery expert.",
+                              education: [
+                                "MD, Paris",
+                              ],
+                              experience: [
+                                "Former Minister of Health",
+                                "Professor of Pediatric Surgery",
+                              ],
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),
               ),
+
 
               const SizedBox(height: 30),
             ],

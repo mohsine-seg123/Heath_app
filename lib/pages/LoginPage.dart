@@ -13,6 +13,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool  _obscureText=true;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -34,6 +35,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -74,6 +76,7 @@ class _LoginPageState extends State<LoginPage> {
                   TextFormField(
                     controller: emailController,
                     decoration: InputDecoration(
+
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
@@ -107,8 +110,18 @@ class _LoginPageState extends State<LoginPage> {
 
                   TextFormField(
                     controller: passwordController,
-                    obscureText: true,
+                    obscureText: _obscureText,
                     decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _obscureText ? Icons.visibility : Icons.visibility_off,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _obscureText = !_obscureText; // inverse l'état
+                            });
+                          },
+                        ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),

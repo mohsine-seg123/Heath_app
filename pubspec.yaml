@@ -48,6 +48,7 @@ dev_dependencies:
   flutter_lints: ^5.0.0
   lottie: ^2.7.0
   shared_preferences: ^2.2.2
+  http: ^1.1.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -1,16 +1,43 @@
 import 'package:flutter/material.dart';
-class Doctors extends StatefulWidget {
-  const Doctors({super.key});
+import 'Docteur_card.dart';
+import 'Data_doctors.dart';
+
+class DoctorsPage extends StatefulWidget {
+  const DoctorsPage({super.key});
 
   @override
-  State<Doctors> createState() => _DoctorsState();
+  _DoctorsPageState createState() => _DoctorsPageState();
 }
 
-class _DoctorsState extends State<Doctors> {
+class _DoctorsPageState extends State<DoctorsPage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text("Doctors page"),
+    // ajuste childAspectRatio si overflow vertical
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+        child: GridView.builder(
+          itemCount: doctorsData.length,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
+            childAspectRatio: 0.72, // <--- augmente si overflow (ex: 0.8) ou diminue si beaucoup d'espace
+          ),
+          itemBuilder: (context, index) {
+            final doc = doctorsData[index];
+            return DocteurCard(
+              DocImgPath: doc['img']!,
+              rating: doc['rating']!,
+              Docname: doc['name']!,
+              specialite: doc['specialite']!,
+              ville: doc['ville']!,
+            );
+          },
+        ),
+      ),
     );
   }
 }
+
+

@@ -25,7 +25,7 @@ class _MedicalFormState extends State<MedicalForm> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Medical Record"),
-        backgroundColor: Colors.deepPurple[200],
+        backgroundColor: Colors.blue[200],
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
@@ -57,14 +57,20 @@ class _MedicalFormState extends State<MedicalForm> {
               TextFormField(
                 decoration: InputDecoration(labelText: "Allergies"),
                 onSaved: (value) => allergies = value!,
+                validator: (value) =>
+                value!.isEmpty ? "Please enter your Allergies" : null,
               ),
               TextFormField(
                 decoration: InputDecoration(labelText: "Medications"),
                 onSaved: (value) => medications = value!,
+                validator: (value) =>
+                value!.isEmpty ? "Please enter your Medications" : null,
               ),
               TextFormField(
                 decoration: InputDecoration(labelText: "Current Symptoms"),
                 onSaved: (value) => symptoms = value!,
+                validator: (value) =>
+                value!.isEmpty ? "Please enter your Symptoms" : null,
               ),
               SizedBox(height: 20),
               ElevatedButton(
