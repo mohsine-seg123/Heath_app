@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../main.dart'; // ⚠️ IMPORTANT pour MyApp.setDarkMode
 
 class MedicalSettingsPage extends StatefulWidget {
   const MedicalSettingsPage({Key? key}) : super(key: key);
@@ -11,9 +13,32 @@ class MedicalSettingsPage extends StatefulWidget {
 
 class _MedicalSettingsPageState extends State<MedicalSettingsPage> {
   bool darkMode = false;
-  bool notifications = true;
-  bool proximityDoctors = true;
-  double medicineReminder = 0.5;
+
+  @override
+  void initState() {
+    super.initState();
+    loadDarkMode();
+  }
+
+  // 🔹 Charger l’état du Dark Mode
+  Future<void> loadDarkMode() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      darkMode = prefs.getBool("darkMode") ?? false;
+    });
+  }
+
+  // 🔹 Message pour options non encore disponibles
+  void showFutureMessage() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text(
+          "This option will be available in a future update.",
+        ),
+        duration: Duration(seconds: 2),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,97 +54,79 @@ class _MedicalSettingsPageState extends State<MedicalSettingsPage> {
         child: SafeArea(
           child: Column(
             children: [
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
+
+              // 🎬 Animation
               Lottie.network(
                 'https://assets7.lottiefiles.com/packages/lf20_touohxv0.json',
                 height: 120,
               ),
-              Text(
+
+              const SizedBox(height: 10),
+
+              const Text(
                 "🩺 Medical Settings",
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                  shadows: [
-                    Shadow(
-                      blurRadius: 8,
-                      color: Colors.teal.shade900,
-                      offset: Offset(0, 2),
-                    ),
-                  ],
                 ),
               ),
-              SizedBox(height: 30),
+
+              const SizedBox(height: 30),
+
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   children: [
-                    // Dark Mode
+                    //  DARK MODE (RÉEL)
                     settingTile(
                       icon: Icons.nightlight_round,
                       title: "Dark Mode",
                       child: FlutterSwitch(
                         value: darkMode,
+                        activeColor: Colors.deepPurple,
                         onToggle: (val) {
                           setState(() {
                             darkMode = val;
                           });
+                          //  Change le thème de toute l’app
+                          MyApp.setDarkMode(context, val);
                         },
-                        activeColor: Colors.deepPurpleAccent,
-                        inactiveColor: Colors.grey.shade300,
                       ),
                     ),
-                    SizedBox(height: 20),
-                    // Notifications
+
+                    const SizedBox(height: 20),
+
+                    //  FUTURE OPTION
                     settingTile(
                       icon: Icons.notifications_active,
                       title: "Notifications",
-                      child: FlutterSwitch(
-                        value: notifications,
-                        onToggle: (val) {
-                          setState(() {
-                            notifications = val;
-                          });
-                        },
-                        activeColor: Colors.orangeAccent,
-                        inactiveColor: Colors.grey.shade300,
+                      child: IconButton(
+                        icon: const Icon(Icons.info_outline),
+                        onPressed: showFutureMessage,
                       ),
                     ),
-                    SizedBox(height: 20),
-                    // Doctors by proximity
+
+                    const SizedBox(height: 20),
+
+                    //  FUTURE OPTION
                     settingTile(
                       icon: Icons.location_on,
                       title: "Nearby Doctors",
-                      child: FlutterSwitch(
-                        value: proximityDoctors,
-                        onToggle: (val) {
-                          setState(() {
-                            proximityDoctors = val;
-                          });
-                        },
-                        activeColor: Colors.greenAccent,
-                        inactiveColor: Colors.grey.shade300,
+                      child: IconButton(
+                        icon: const Icon(Icons.info_outline),
+                        onPressed: showFutureMessage,
                       ),
                     ),
-                    SizedBox(height: 20),
-                    // Medicine reminder level
+
+                    const SizedBox(height: 20),
+
                     settingTile(
                       icon: Icons.medical_services,
                       title: "Reminder Intensity",
-                      child: Expanded(
-                        child: Slider(
-                          value: medicineReminder,
-                          min: 0,
-                          max: 1,
-                          divisions: 10,
-                          activeColor: Colors.pinkAccent,
-                          inactiveColor: Colors.pink.shade100,
-                          onChanged: (value) {
-                            setState(() {
-                              medicineReminder = value;
-                            });
-                          },
-                        ),
+                      child: IconButton(
+                        icon: const Icon(Icons.info_outline),
+                        onPressed: showFutureMessage,
                       ),
                     ),
                   ],
@@ -132,28 +139,29 @@ class _MedicalSettingsPageState extends State<MedicalSettingsPage> {
     );
   }
 
-  Widget settingTile({required IconData icon, required String title, required Widget child}) {
+  // 🔹 Widget réutilisable
+  Widget settingTile({
+    required IconData icon,
+    required String title,
+    required Widget child,
+  }) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
       decoration: BoxDecoration(
         color: Colors.white.withOpacity(0.2),
         borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 10,
-            offset: Offset(0, 5),
-          ),
-        ],
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
             children: [
-              Icon(icon, color: Colors.black),
-              SizedBox(width: 15),
-              Text(title, style: TextStyle(color: Colors.black, fontSize: 18)),
+              Icon(icon),
+              const SizedBox(width: 15),
+              Text(
+                title,
+                style: const TextStyle(fontSize: 18),
+              ),
             ],
           ),
           child,
@@ -162,4 +170,5 @@ class _MedicalSettingsPageState extends State<MedicalSettingsPage> {
     );
   }
 }
+
 

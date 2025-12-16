@@ -1,32 +1,93 @@
 import 'package:flutter/material.dart';
-import 'package:untitled1/pages/About.dart';
-import 'package:untitled1/pages/Doctors.dart';
-import 'package:untitled1/pages/IntroPage.dart';
-import 'package:untitled1/pages/LoginPage.dart';
-import 'package:untitled1/pages/MyHeaderDrawer.dart';
-import 'package:untitled1/pages/Settings.dart';
-import 'package:untitled1/pages/home_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:HealthConnect/pages/About.dart';
+import 'package:HealthConnect/pages/Doctors.dart';
+import 'package:HealthConnect/pages/IntroPage.dart';
+import 'package:HealthConnect/pages/LoginPage.dart';
+import 'package:HealthConnect/pages/MyHeaderDrawer.dart';
+import 'package:HealthConnect/pages/Settings.dart';
+import 'package:HealthConnect/pages/home_page.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final prefs = await SharedPreferences.getInstance();
+
+  bool isLoggedIn = prefs.getBool("isLoggedIn") ?? false;
+  bool isDarkMode = prefs.getBool("darkMode") ?? false;
+
+  runApp(
+    MyApp(
+      isLoggedIn: isLoggedIn,
+      isDarkMode: isDarkMode,
+    ),
+  );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
 
-  // This widget is the root of your application.
+class MyApp extends StatefulWidget {
+  final bool isLoggedIn;
+  final bool isDarkMode;
+
+  const MyApp({
+    super.key,
+    required this.isLoggedIn,
+    required this.isDarkMode,
+  });
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+
+  // 👉 permet de changer le thème depuis n’importe quelle page
+  static void setDarkMode(BuildContext context, bool value) {
+    final _MyAppState? state =
+    context.findAncestorStateOfType<_MyAppState>();
+    state?.updateTheme(value);
+  }
+}
+
+class _MyAppState extends State<MyApp> {
+  late bool darkMode;
+
+  @override
+  void initState() {
+    super.initState();
+    darkMode = widget.isDarkMode;
+  }
+
+  Future<void> updateTheme(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool("darkMode", value);
+
+    setState(() {
+      darkMode = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      home: IntroPage(),
+
+      // 🌙 THÈME GLOBAL
+      theme: darkMode ? ThemeData.dark() : ThemeData.light(),
+
+      // ROUTES
+      initialRoute: widget.isLoggedIn ? "/home" : "/intro",
+      routes: {
+        "/intro": (context) => const IntroPage(),
+        "/login": (context) => const LoginPage(),
+        "/home": (context) => const HomePage(),
+      },
     );
   }
 }
 
+
+
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+    const HomePage({super.key});
+
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -108,29 +169,27 @@ class _HomePageState extends State<HomePage> {
     return Material(
       color: selected ? Colors.grey[300] : Colors.transparent,
       child: InkWell(
-        onTap: () {
-          Navigator.pop(context);
-          setState(() {
-            // les conditions pour donner currentPage une valeur selon enum
-            if (id == 1) {
-              currentPage = DrawerSections.Home;
-            } else if (id == 2) {
-              currentPage = DrawerSections.Doctors;
-            } else if (id == 3) {
-              currentPage = DrawerSections.settings;
-            }else if (id == 4) {
-              currentPage = DrawerSections.About;
+          onTap: () async {
+            Navigator.pop(context);
+            if (id == 5) {
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              prefs.setBool("isLoggedIn", false);
+              Navigator.pushNamedAndRemoveUntil(context, "/intro", (route) => false);
+            } else {
+              setState(() {
+                if (id == 1) {
+                  currentPage = DrawerSections.Home;
+                } else if (id == 2) {
+                  currentPage = DrawerSections.Doctors;
+                } else if (id == 3) {
+                  currentPage = DrawerSections.settings;
+                } else if (id == 4) {
+                  currentPage = DrawerSections.About;
+                }
+              });
             }
-            else if (id == 5) { // Logout
-              Navigator.pop(context); // fermer le drawer
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => LoginPage()),
-              );
-            }
-          });
-        },
-        child: Padding(
+          },
+          child: Padding(
           padding: EdgeInsets.all(15.0),
           child: Row(
             children: [

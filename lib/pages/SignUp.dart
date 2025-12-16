@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:untitled1/main.dart';
-import 'package:untitled1/pages/LoginPage.dart'; // Retour vers login
-import 'package:untitled1/pages/home_page.dart';
+import 'package:HealthConnect/main.dart';
+import 'package:HealthConnect/pages/LoginPage.dart'; // Retour vers login
+import 'package:HealthConnect/pages/home_page.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -13,6 +13,7 @@ class SignUp extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUp> {
   bool  _obscureText=true;
+  bool obscureText1=true;
   final _usernameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -82,15 +83,19 @@ class _SignUpPageState extends State<SignUp> {
                     labelText: "Email",
                     border: OutlineInputBorder(),
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
-                    }
-                    if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                      return 'Enter a valid email';
-                    }
-                    return null;
-                  },
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your email';
+                      }
+
+                      // Regex pour accepter uniquement les vrais emails Gmail
+                      if (!RegExp(r'^[a-zA-Z0-9._%+-]+@gmail\.com$').hasMatch(value)) {
+                        return 'Please enter a valid email address';
+                      }
+
+                      return null;
+                    },
+
                 ),
                 const SizedBox(height: 20),
 
@@ -128,10 +133,20 @@ class _SignUpPageState extends State<SignUp> {
                 // Confirm Password
                 TextFormField(
                   controller: _confirmPasswordController,
-                  obscureText: true,
-                  decoration: const InputDecoration(
+                  obscureText: obscureText1,
+                  decoration: InputDecoration(
                     labelText: "Confirm Password",
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          obscureText1 ? Icons.visibility : Icons.visibility_off,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            obscureText1 = !obscureText1; // inverse l'état
+                          });
+                        },
+                      )
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -152,7 +167,8 @@ class _SignUpPageState extends State<SignUp> {
 
                       //  Sauvegarder l'utilisateur
                       await saveUser();
-
+                      SharedPreferences prefs = await SharedPreferences.getInstance();
+                      await prefs.setBool("isLoggedIn", true);
                       //  Aller vers Login après SignUp
                       Navigator.pushReplacement(
                         context,

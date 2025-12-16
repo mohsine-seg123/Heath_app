@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:untitled1/pages/LoginPage.dart';
-import 'package:untitled1/pages/SignUp.dart';
+import 'package:HealthConnect/pages/LoginPage.dart';
+import 'package:HealthConnect/pages/SignUp.dart';
 
 class IntroPage extends StatelessWidget {
   const IntroPage({super.key});

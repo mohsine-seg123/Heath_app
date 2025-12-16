@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:untitled1/pages/Category.dart';
-import 'package:untitled1/pages/Docteur_card.dart';
+import 'package:HealthConnect/pages/Category.dart';
+import 'package:HealthConnect/pages/Docteur_card.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:untitled1/pages/Doctors.dart';
+import 'package:HealthConnect/pages/Doctors.dart';
 
+import 'Data_doctors.dart';
 import 'DoctorDetailPage.dart';
+import 'DoctorsBycategory.dart';
 import 'MedicalForm.dart';
+import 'SearchDoctorsPage.dart';
 
 class Home_Page extends StatefulWidget {
   const Home_Page({super.key});
@@ -52,11 +55,13 @@ class _HomePageState extends State<Home_Page> {
               // ✅ HEADER CARD
               Container(
                 padding: const EdgeInsets.all(20),
-                margin: const EdgeInsets.all(0),
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  boxShadow: const [
-                    BoxShadow(blurRadius: 10, color: Colors.black12),
+                  color: Theme.of(context).cardColor, // ✅ dynamique
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 10,
+                      color: Colors.black.withOpacity(0.1),
+                    ),
                   ],
                 ),
                 child: Row(
@@ -70,14 +75,13 @@ class _HomePageState extends State<Home_Page> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           "Welcome back",
-                          style: TextStyle(color: Colors.grey),
+                          style: Theme.of(context).textTheme.bodySmall,
                         ),
                         Text(
                           username ?? "User",
-                          style: const TextStyle(
-                            fontSize: 20,
+                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -86,6 +90,7 @@ class _HomePageState extends State<Home_Page> {
                   ],
                 ),
               ),
+
 
               // ✅ MEDICAL CARD
               Container(
@@ -152,21 +157,33 @@ class _HomePageState extends State<Home_Page> {
               ),
 
               // ✅ SEARCH
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 3),
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                decoration: BoxDecoration(
-                  color: Colors.blue.withOpacity(0.08),
-                  borderRadius: BorderRadius.circular(14),
-                ),
-                child: const TextField(
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.search),
-                    border: InputBorder.none,
-                    hintText: "Search doctor...",
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const SearchDoctorsPage(),
+                    ),
+                  );
+                },
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 3),
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  decoration: BoxDecoration(
+                    color: Colors.blue.withOpacity(0.08),
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                  child: const TextField(
+                    enabled: false, // 👈 empêche l’édition ici
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.search),
+                      border: InputBorder.none,
+                      hintText: "Search doctor...",
+                    ),
                   ),
                 ),
               ),
+
 
               const SizedBox(height: 20),
 
@@ -175,33 +192,86 @@ class _HomePageState extends State<Home_Page> {
                 height: 90,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
-                  children: const [
+                  children: [
                     Category(
                       iconImage: 'assets/images/tooth1.png',
                       Categoryname: "Dentist",
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DoctorsByCategory(
+                              category: "Dentist",
+                              doctors: doctorsData,
+                            ),
+                          ),
+                        );
+                      },
                     ),
                     Category(
                       iconImage: 'assets/images/surgeon.png',
                       Categoryname: "Surgeon",
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DoctorsByCategory(
+                              category: "Surgeon",
+                              doctors: doctorsData,
+                            ),
+                          ),
+                        );
+                      },
                     ),
                     Category(
                       iconImage: 'assets/images/capsule.png',
                       Categoryname: "Pharmacist",
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DoctorsByCategory(
+                              category: "Pharmacist",
+                              doctors: doctorsData,
+                            ),
+                          ),
+                        );
+                      },
                     ),
                     Category(
                       iconImage: 'assets/images/cardiology.png',
                       Categoryname: "Cardiology",
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DoctorsByCategory(
+                              category: "Cardiology",
+                              doctors: doctorsData,
+                            ),
+                          ),
+                        );
+                      },
                     ),
                     Category(
                       iconImage: 'assets/images/brain.png',
                       Categoryname: "Neurologie",
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DoctorsByCategory(
+                              category: "Neurologie",
+                              doctors: doctorsData,
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),
               ),
-
               const SizedBox(height: 20),
-
               // ✅ TITRE DOCTORS
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),

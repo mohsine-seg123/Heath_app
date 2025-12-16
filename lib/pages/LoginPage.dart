@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:untitled1/pages/SignUp.dart';
-import 'package:untitled1/pages/home_page.dart';
+import 'package:HealthConnect/pages/SignUp.dart';
+import 'package:HealthConnect/pages/home_page.dart';
 
 import '../main.dart';
 
@@ -147,12 +147,14 @@ class _LoginPageState extends State<LoginPage> {
                     child: ElevatedButton(
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          bool success = await loginUser(
+                          bool success = await loginUser(// on stocke les valeur dasn la focntion on haut loginuser qui est lié au shared preferences
                             emailController.text.trim(),
                             passwordController.text.trim(),
                           );
 
                           if (success) {
+                            SharedPreferences prefs = await SharedPreferences.getInstance();
+                            await prefs.setBool("isLoggedIn", true);
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(builder: (context) => HomePage()),
@@ -224,6 +226,7 @@ class _LoginPageState extends State<LoginPage> {
                 ],
               ),
             ),
+
           ),
         ),
       ),

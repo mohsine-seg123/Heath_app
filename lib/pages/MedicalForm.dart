@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:untitled1/pages/home_page.dart';
+import 'package:HealthConnect/pages/home_page.dart';
 
 import '../main.dart';
 
